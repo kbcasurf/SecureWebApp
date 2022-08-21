@@ -1,0 +1,10 @@
+# Grupo Red Hat 9 AWS Cloud
+[redhatgroup]
+
+server1 ansible_host=15.228.18.100 ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/SRV1.pem
+
+server2 ansible_host=18.228.224.113 ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/SRV2.pem
+
+server3 ansible_host=15.229.47.111 ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/SRV3.pem
+
+server4 ansible_host=52.67.228.218 ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/SRV4.pem

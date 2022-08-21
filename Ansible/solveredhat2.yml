@@ -1,0 +1,11 @@
+---
+#Script de remediação do OpenSCAP
+- name: Roda script de remediação no Red Hat
+  hosts: redhatgroup
+  become: yes
+  ignore_errors: yes
+  tasks:
+    - name: Executando o script de remediação no Red Hat 
+      command: 
+          cmd: ./remediate.sh 
+          chdir: /opt/scanResults/ 
