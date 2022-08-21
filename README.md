@@ -1,2 +1,2 @@
-# galp
-A public repository for Galp IaC test.
+# Projects
+Repository made to save my working projects
