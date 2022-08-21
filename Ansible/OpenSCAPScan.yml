@@ -1,0 +1,171 @@
+---
+#Testa disponibilidade das instâncias
+#- name: Ping em todas as máquinas do grupo
+#Atualização de cache de repositórios
+- name: Update / Upgrade Ubuntu
+  hosts: all
+  become: yes
+  ignore_errors: yes
+  tasks:
+    - name: Update de cache apt-get
+      apt:
+         update_cache: yes
+
+
+
+
+#Roda instalação do Apache WebServer
+- name: Instalação do Apache máquinas Ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: Instalando Apache
+      apt:
+        name: apache2
+        state: present
+    - name: Inicializando serviço Apache 
+      service:      
+        name: apache2
+        state: started
+
+
+
+
+#Roda instalação do OpenSCAP
+- name: Instalação do OpenSCAP máquinas Ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: Instalando OpenSCAP ssg-base
+      apt:        
+        name: ssg-base
+        state: present
+    - name: Instalando OpenSCAP ssg-debderived
+      apt:        
+        name: ssg-debderived
+        state: present
+    - name: Instalando OpenSCAP ssg-debian
+      apt:        
+        name: ssg-debian
+        state: present
+    - name: Instalando OpenSCAP ssg-nondebian
+      apt:        
+        name: ssg-nondebian
+        state: present
+    - name: Instalando OpenSCAP ssg-applications
+      apt:        
+        name: ssg-applications
+        state: present         
+
+
+
+
+
+#Roda instalação do Unzip
+- name: Instalação do Unzip máquinas Ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: Instalando Unzip
+      apt:        
+        name: unzip
+        state: present    
+
+
+
+
+#Remove o arquivo de download dos arquivos de perfis de varredura antigos
+- name: Remove o arquivo de download dos perfis de varredura antigos do diretório do OpenSCAP no Ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: Deletando o arquivo .zip de perfis de varredura no Ubuntu
+      file:
+        path: /usr/share/xml/scap/ssg/content/scap-security-guide-0.1.62.zip
+        state: absent        
+
+
+
+
+#Faz download dos arquivos de perfis de varredura mais atualizados
+- name: Download do arquivo de profiles de varredura do GitHub para Ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: Execução do download Ubuntu
+      get_url:
+          url: https://github.com/ComplianceAsCode/content/releases/download/v0.1.62/scap-security-guide-0.1.62.zip
+          dest: /usr/share/xml/scap/ssg/content/       
+
+
+
+
+
+#Extração do conteúdo do arquivo baixado para a pasta /var/repoScap
+- name: Extração do conteúdo do arquivo baixado para o diretório do OpenSCAP Ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: Extraindo arquivos Ubuntu
+      unarchive:
+          src: /usr/share/xml/scap/ssg/content/scap-security-guide-0.1.62.zip
+          dest: /usr/share/xml/scap/ssg/content/
+          remote_src: yes  
+
+
+
+
+#Criação do diretório de resultados das varreduras
+- name: Criação de diretório /opt/scanResults para o Ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: Criando diretório no Ubuntu
+      file:
+        path: /opt/scanResults
+        state: directory     
+
+
+
+
+
+#Entrada no diretório onde ficam os perfis do OpenSCAP e execução do perfil SSG adequado a cada sistema
+- name: Fase de execução do OpenSCAP em busca de vulnerabilidade no Ubuntu
+  hosts: all
+  become: yes
+  ignore_errors: yes
+  tasks:
+    - name: Executando o OpenSCAP em busca de vulnerabildiades no Ubuntu 
+      command: 
+          cmd: oscap xccdf eval --fetch-remote-resources --profile xccdf_org.ssgproject.content_profile_stig --results-arf /opt/scanResults/arf1.xml --report /opt/scanResults/scan1.html /usr/share/xml/scap/ssg/content/scap-security-guide-0.1.62/ssg-ubuntu2004-ds.xml
+          chdir: /usr/share/xml/scap/ssg/content/scap-security-guide-0.1.62
+
+
+
+
+
+#Remove o arquivo .html do scan passado que estava na pasta do Apache
+- name: Remove o arquivo .html do scan passado que estava na pasta do Apache no Ubuntu
+  hosts: all
+  become: yes
+  ignore_errors: yes
+  tasks:
+    - name: Deletando o arquivo .html do diretório /var/www/html no Ubuntu
+      file:
+        path: /var/www/html/scan1.html
+        state: absent         
+
+
+
+
+
+#Cópia do arquivo scan1.html para a pasta do Apache para consulta pelo browser (http://ip_do_servidor/scan1.html)
+- name: Cópia do arquivo scan1.html para a pasta do Apache no Ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: Copiando arquivo de resultado para a pasta do Apache no Ubuntu
+      file:
+          src: /opt/scanResults/scan1.html
+          dest: /var/www/html/scan1.html
+          state: link
