@@ -1,9 +1,0 @@
-#Reboot de sistema
-- name: Reboot Red Hat
-  hosts: redhatgroup
-  become: yes
-  ignore_errors: yes
-  tasks:
-    - name: Comando de reboot 
-      command: 
-          cmd: shutdown -r now
