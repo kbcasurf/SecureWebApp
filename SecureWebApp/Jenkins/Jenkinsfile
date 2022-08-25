@@ -1,30 +1,3 @@
-
-Skip to content
-Pull requests
-Issues
-Marketplace
-Explore
-@kbcasurf
-cehkunal /
-webapp
-Public
-forked from devopssecure/webapp
-
-Code
-Pull requests 12
-Actions
-Projects
-Security
-
-    Insights
-
-webapp/Jenkinsfile.old
-@andynosy
-andynosy Rename Jenkinsfile to Jenkinsfile.old
-Latest commit 9b4f8f6 on Jul 1, 2020
-History
-1 contributor
-68 lines (59 sloc) 1.66 KB
 pipeline {
   agent any 
   tools {
