@@ -6,17 +6,7 @@
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>WebApp Maven Webapp</name>
-  <url>http://maven.apache.org</url>
- 
-<plugin>            
-  <groupId>org.apache.maven.plugins</groupId>
-  <artifactId>maven-war-plugin</artifactId>
-  <configuration>
-    <webXml>webapp\WEB-INF\web.xml</webXml>        
-  </configuration>
-</plugin>
-   
- 
+  <url>http://maven.apache.org</url> 
 </project>
 
 
