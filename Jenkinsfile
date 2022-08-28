@@ -16,15 +16,6 @@ pipeline {
       }
     }
     
-    
-    stage ('Security Check') {
-     steps {
-        sh 'rm trufflehog || true'
-        sh 'trufflehog --json https://github.com/kbcasurf/SecureWebApp.git > trufflehog'
-        sh 'cat trufflehog'
-      }
-    }
-    
 
     stage ('Build') {
       steps { 
