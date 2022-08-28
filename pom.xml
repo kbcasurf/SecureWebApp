@@ -3,6 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>lu.amazon.aws.demo</groupId>
   <artifactId>WebApp</artifactId>
+  <failOnMissingWebXml>false</failOnMissingWebXml>
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>WebApp Maven Webapp</name>
