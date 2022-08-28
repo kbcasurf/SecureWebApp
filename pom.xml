@@ -16,21 +16,8 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>WebApp</finalName>
+	  <failOnMissingWebXml>false</failOnMissingWebXml>
+    	  <finalName>WebApp</finalName>
   </build>
 </project>
- <build>
- 
-	<plugins>
-		
-		<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-war-plugin</artifactId>
-			<version>2.6</version>
-			<configuration>
-				<failOnMissingWebXml>false</failOnMissingWebXml>
-			</configuration>
-		</plugin>
-		
-	</plugins>
-  </build>	
+ <build>		
