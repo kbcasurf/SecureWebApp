@@ -17,7 +17,7 @@ pipeline {
     }
     
     
-    stage ('Check-Git-Secrets') {
+    stage ('Security Check') {
      steps {
         sh 'rm trufflehog || true'
         sh 'docker run gesellix/trufflehog --json https://github.com/kbcasurf/SecureWebApp.git > trufflehog'
